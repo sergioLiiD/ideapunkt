@@ -1,0 +1,10 @@
+# Passenger configuration for Next.js on DreamHost
+PassengerEnabled on
+PassengerAppRoot /home/USUARIO/ideapunkt.de
+PassengerAppType node
+PassengerStartupFile package.json
+PassengerNodejs /usr/bin/node
+
+# Optional: Set environment variables if .env doesn't work
+# PassengerAppEnv production
+
