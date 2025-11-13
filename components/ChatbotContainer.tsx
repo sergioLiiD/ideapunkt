@@ -600,7 +600,7 @@ export default function ChatbotContainer({
               value={textInput}
               onChange={(e) => setTextInput(e.target.value)}
               onKeyDown={handleTextInputKeyDown}
-              placeholder="Escribe tu mensaje..."
+              placeholder="please write your message..."
               className="flex-1 bg-transparent border-none outline-none text-gray-900 placeholder-gray-500 text-sm font-medium"
               disabled={isLoading}
             />
