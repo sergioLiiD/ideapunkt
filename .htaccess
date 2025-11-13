@@ -1,6 +1,6 @@
 # Passenger configuration for Next.js on DreamHost
 PassengerEnabled on
-PassengerAppRoot /home/USUARIO/ideapunkt.de
+PassengerAppRoot /home/ideapunkt_admin/ideapunkt.de
 PassengerAppType node
 PassengerStartupFile package.json
 PassengerNodejs /usr/bin/node
@@ -8,3 +8,29 @@ PassengerNodejs /usr/bin/node
 # Optional: Set environment variables if .env doesn't work
 # PassengerAppEnv production
 
+# Deshabilitar caché COMPLETAMENTE para evitar problemas con versiones antiguas
+<IfModule mod_headers.c>
+  # Deshabilitar caché para TODOS los archivos HTML y páginas principales
+  <FilesMatch "\.(html|htm|txt)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate, max-age=0"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+  </FilesMatch>
+  
+  # Deshabilitar caché para archivos JavaScript y CSS (excepto los de _next/static)
+  <FilesMatch "\.(js|css)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate, max-age=0"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+  </FilesMatch>
+  
+  # Permitir caché solo para archivos estáticos con hash en _next/static
+  <FilesMatch "^/_next/static/.*\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>
+
+# Forzar recarga de archivos JavaScript y CSS
+<IfModule mod_expires.c>
+  ExpiresActive Off
+</IfModule>

@@ -47,6 +47,10 @@ export default function Home() {
             <span className="block">TRANSFORM YOUR BUSINESS</span>
             <span className="block">WITH TECHNOLOGY</span>
           </h1>
+          {/* Indicador de versión para verificación */}
+          <div className="mt-4 text-xs text-gray-500 opacity-50" id="version-indicator" data-version="2.0" data-build="1763038018480" data-timestamp="2025-01-14">
+            v2.0 - build-1763038018480 - ACTUALIZADO 2025-01-14
+          </div>
         </div>
 
         {/* Shader */}

@@ -72,6 +72,9 @@ export const metadata: Metadata = {
     // yandex: 'your-yandex-verification-code',
     // yahoo: 'your-yahoo-verification-code',
   },
+  other: {
+    'ssl-verification': 'k8cLoWMqZQhbRXL_ZcaFBuv6O5FI89VXqboYqGTo4zs._cAaIZ25EFsTEuLSjFFP4_G5vPTDJGdhcruV7acMFVk',
+  },
   alternates: {
     canonical: baseUrl,
     languages: {

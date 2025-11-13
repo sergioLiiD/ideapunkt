@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico - Ideapunkt</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .box {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .success { border-left: 4px solid #4CAF50; }
+        .error { border-left: 4px solid #f44336; }
+        .info { border-left: 4px solid #2196F3; }
+        h1 { color: #333; }
+        h2 { color: #666; margin-top: 0; }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .timestamp {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4CAF50;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="box info">
+        <h1>🔍 Diagnóstico de Versión - Ideapunkt</h1>
+        <p>Si ves este archivo, significa que los archivos nuevos se están sirviendo correctamente.</p>
+    </div>
+
+    <div class="box success">
+        <h2>✅ Información de Versión</h2>
+        <div class="timestamp">BUILD_ID: build-1763038018480</div>
+        <p><strong>Versión:</strong> 2.0</p>
+        <p><strong>Fecha de Actualización:</strong> 2025-01-14</p>
+        <p><strong>Status:</strong> <span style="color: #4CAF50;">ARCHIVOS NUEVOS SERVIDOS CORRECTAMENTE</span></p>
+    </div>
+
+    <div class="box">
+        <h2>📊 Información del Sistema</h2>
+        <p><strong>Timestamp Unix:</strong> <span id="timestamp"></span></p>
+        <p><strong>Fecha/Hora Actual:</strong> <span id="datetime"></span></p>
+        <p><strong>User Agent:</strong> <span id="useragent"></span></p>
+    </div>
+
+    <div class="box info">
+        <h2>🔧 Pruebas de Verificación</h2>
+        <p>Si ves este archivo con el BUILD_ID <code>build-1763038018480</code>, entonces:</p>
+        <ul>
+            <li>✅ Los archivos nuevos están en el servidor</li>
+            <li>✅ El servidor web puede servir archivos estáticos</li>
+            <li>❓ Next.js puede no estar corriendo (por eso las rutas API dan 404)</li>
+        </ul>
+    </div>
+
+    <div class="box">
+        <h2>🚨 Si NO Ves Este Archivo o Ves Versión Antigua</h2>
+        <p>Posibles causas:</p>
+        <ol>
+            <li><strong>CDN/Proxy cacheando:</strong> Verifica si usas Cloudflare u otro CDN</li>
+            <li><strong>Caché del navegador:</strong> Prueba en modo incógnito</li>
+            <li><strong>Múltiples ubicaciones:</strong> El dominio puede apuntar a otra carpeta</li>
+            <li><strong>Next.js no corriendo:</strong> Las rutas API no funcionan si Next.js no está activo</li>
+        </ol>
+    </div>
+
+    <script>
+        document.getElementById('timestamp').textContent = Date.now();
+        document.getElementById('datetime').textContent = new Date().toLocaleString();
+        document.getElementById('useragent').textContent = navigator.userAgent;
+    </script>
+</body>
+</html>
+

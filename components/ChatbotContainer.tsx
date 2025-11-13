@@ -3,6 +3,9 @@
 import { useRef, useEffect, useState } from 'react'
 import Vapi from '@vapi-ai/web'
 
+const getSafeAreaBottom = (basePx: number) =>
+  `calc(env(safe-area-inset-bottom, 0px) + ${basePx}px)`
+
 interface ChatbotContainerProps {
   onChatStateChange: (state: 'idle' | 'user-speaking' | 'bot-speaking') => void
   onChatActiveChange: (active: boolean) => void
@@ -485,6 +488,7 @@ export default function ChatbotContainer({
       <div 
         ref={containerRef}
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 flex flex-col items-center gap-3"
+        style={{ bottom: getSafeAreaBottom(120) }}
       >
         {!isCallActive ? (
           // Selección de modo antes de iniciar
@@ -498,7 +502,7 @@ export default function ChatbotContainer({
                 {isLoading && chatMode === 'voice' ? (
                   <>
                     <span className="animate-spin text-xl">⏳</span>
-                    <span>Iniciando...</span>
+                    <span>Starting...</span>
                   </>
                 ) : (
                   <>
@@ -531,10 +535,35 @@ export default function ChatbotContainer({
           // Botón para finalizar
           <button
             onClick={handleEndCall}
-            className="px-8 py-3 bg-red-500 hover:bg-red-600 text-white rounded-full transition-all font-semibold text-base flex items-center gap-2 shadow-lg hover:shadow-xl"
+            className={
+              chatMode === 'voice'
+                ? 'w-12 h-12 bg-red-500 hover:bg-red-600 text-white rounded-full transition-all flex items-center justify-center shadow-lg hover:shadow-xl'
+                : 'px-4 py-1.5 bg-red-500 hover:bg-red-600 text-white rounded-full transition-all font-semibold text-xs flex items-center gap-2 shadow-md hover:shadow-lg'
+            }
+            aria-label={`Finalizar ${chatMode === 'voice' ? 'llamada' : 'chat'}`}
           >
-            <span className="text-xl">📞</span>
-            <span>Finalizar {chatMode === 'voice' ? 'Llamada' : 'Chat'}</span>
+            {chatMode === 'voice' ? (
+              <svg
+                aria-hidden
+                className="w-5 h-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M3.98 6.223c.493-1.71 2.795-2.26 4.035-1.036l1.15 1.136c.46.454.542 1.166.203 1.71l-.76 1.22a.75.75 0 0 0 .065.873 11.056 11.056 0 0 0 2.699 2.7.75.75 0 0 0 .873.064l1.22-.76c.544-.338 1.256-.256 1.71.203l1.136 1.15c1.224 1.24.674 3.542-1.036 4.035-2.284.658-4.86-.273-7.57-2.982-2.71-2.71-3.64-5.286-2.982-7.57Z" />
+                <path d="M15 9l6-6m0 6-6-6" />
+              </svg>
+            ) : (
+              <>
+                <span className="text-lg" aria-hidden>
+                  ✕
+                </span>
+              <span>End Chat</span>
+              </>
+            )}
           </button>
         )}
 
@@ -554,14 +583,17 @@ export default function ChatbotContainer({
         {/* Indicador de estado cuando la llamada está activa */}
         {isCallActive && (
           <div className="px-4 py-1.5 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-full text-xs text-gray-600">
-            {chatMode === 'voice' ? '🎤 Conversación por voz activa' : '💬 Chat por texto activo'}
+            {chatMode === 'voice' ? '🎤 Voice call active' : '💬 Text chat active'}
           </div>
         )}
       </div>
 
       {/* Input de texto para modo chat - siempre fijo en bottom-24 */}
       {isCallActive && chatMode === 'text' && (
-        <div className="absolute left-1/2 transform -translate-x-1/2 z-25 w-full max-w-2xl px-8 bottom-24">
+        <div
+          className="absolute left-1/2 transform -translate-x-1/2 z-25 w-full max-w-2xl px-8 bottom-24"
+          style={{ bottom: getSafeAreaBottom(200) }}
+        >
           <div className="flex gap-2 items-center backdrop-blur-lg bg-white/30 rounded-full px-4 py-3 shadow-lg border border-white/20">
             <input
               type="text"
@@ -577,7 +609,7 @@ export default function ChatbotContainer({
               disabled={!textInput.trim() || isLoading}
               className="px-4 py-2 bg-[#6835F9] hover:bg-[#5A2DE8] text-white rounded-full transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1 text-sm font-semibold"
             >
-              <span>Enviar</span>
+              <span>Send</span>
               <span>➤</span>
             </button>
           </div>
@@ -586,9 +618,12 @@ export default function ChatbotContainer({
 
       {/* Contenedor de transcripciones con efecto flotante integrado */}
       {isCallActive && transcripts.length > 0 && (
-        <div className={`absolute left-1/2 transform -translate-x-1/2 z-20 w-full max-w-2xl px-8 ${
-          chatMode === 'text' ? 'bottom-36' : 'bottom-24'
-        }`}>
+        <div
+          className={`absolute left-1/2 transform -translate-x-1/2 z-20 w-full max-w-2xl px-8 ${
+            chatMode === 'text' ? 'bottom-36' : 'bottom-24'
+          }`}
+          style={{ bottom: getSafeAreaBottom(chatMode === 'text' ? 264 : 96) }}
+        >
           <div 
             ref={transcriptsContainerRef}
             className="relative max-h-64 overflow-y-auto pb-4"
