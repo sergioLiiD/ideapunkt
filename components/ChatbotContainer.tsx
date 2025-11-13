@@ -530,6 +530,10 @@ export default function ChatbotContainer({
                 )}
               </button>
             </div>
+            {/* Indicador de versión */}
+            <div className="text-xs text-gray-500 opacity-50" id="version-indicator" data-version="2.0" data-build="1763038018480" data-timestamp="2025-01-14">
+              v2.0 - build-1763038018480
+            </div>
           </div>
         ) : (
           // Botón para finalizar
